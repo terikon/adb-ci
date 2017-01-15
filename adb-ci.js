@@ -2,7 +2,7 @@
 
 'use strict';
 
-const IS_CI = true; //process.env.CI;
+const IS_CI = process.env.CI;
 
 const original_location = `${process.env.ANDROID_HOME}/platform-tools/adb`;
 
