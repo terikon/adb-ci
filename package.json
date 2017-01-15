@@ -5,11 +5,23 @@
   "bin": {
     "adb": "./adb-ci.js"
   },
-  "dependencies": {},
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terikon/adb-ci.git"
+  },
+  "author": {
+    "name": "Roman Viskin",
+    "email": "npm@terikon.com",
+    "url": "http://il.linkedin.com/in/romanviskin"
+  },
+  "bugs": {
+    "url": "https://github.com/terikon/adb-ci/issues"
+  },
+  "homepage": "https://github.com/terikon/adb-ci#readme",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
 }
