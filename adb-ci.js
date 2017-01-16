@@ -41,6 +41,6 @@ const
     stdio: 'inherit'
   });
 
-adb.on('close', code => {
+adb.on('exit', code => {
   process.exit(code);
 });
