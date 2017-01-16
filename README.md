@@ -1,3 +1,5 @@
+# This tools is not functional yet
+
 # Problem
 
 You want to test your Android Cordova application with [Travis](https://travis-ci.org/) (or any other CI solution).
