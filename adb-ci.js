@@ -45,3 +45,8 @@ adb.on('exit', code => {
   // Do not use process.exit, see http://stackoverflow.com/a/37592669/1691132
   process.exitCode = code;
 });
+
+adb.on('error', () => {
+  console.log(`adb-ci wrapper could not start adb at ${original_location}`);
+  process.exitCode = 1;
+});
