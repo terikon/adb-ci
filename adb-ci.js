@@ -42,5 +42,6 @@ const
   });
 
 adb.on('exit', code => {
-  process.exit(code);
+  // Do not use process.exit, see http://stackoverflow.com/a/37592669/1691132
+  process.exitCode = code;
 });
