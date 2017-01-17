@@ -2,11 +2,16 @@
 
 'use strict';
 
+const fs = require('fs'),
+  path = require('path');
+
 const IS_CI = process.env.CI;
 
 const original_location = `${process.env.ANDROID_HOME}/platform-tools/adb`;
 
 let args = process.argv.slice(2);
+
+const logPath = path.join(__dirname, 'adb-ci.txt');
 
 if (IS_CI) {
 
@@ -35,6 +40,8 @@ if (IS_CI) {
 
 }
 
+fs.appendFileSync(logPath, `${new Date().toLocaleString()} adb-ci spawn: ${JSON.stringify(args)}\n`);
+
 const
   spawn = require('child_process').spawn,
   adb = spawn(original_location, args, {
@@ -42,11 +49,13 @@ const
   });
 
 adb.on('exit', code => {
+  fs.appendFileSync(logPath, `${new Date().toLocaleString()} adb-ci exit: ${code}\n`);
   // Do not use process.exit, see http://stackoverflow.com/a/37592669/1691132
   process.exitCode = code;
 });
 
 adb.on('error', () => {
+  fs.appendFileSync(logPath,`${new Date().toLocaleString()} adb-ci error\n`);
   console.log(`adb-ci wrapper could not start adb at ${original_location}`);
   process.exitCode = 1;
 });
