@@ -5,7 +5,7 @@
 const fs = require('fs'),
   path = require('path');
 
-const IS_CI = process.env.CI;
+const IS_CI = false;//process.env.CI;
 
 const original_location = `${process.env.ANDROID_HOME}/platform-tools/adb`;
 
