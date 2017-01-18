@@ -13,6 +13,8 @@ let args = process.argv.slice(2);
 
 const logPath = path.join(__dirname, 'adb-ci.txt');
 
+const currentDate = new Date();
+
 if (IS_CI) {
 
   // See https://developer.android.com/studio/command-line/adb.html
@@ -40,7 +42,7 @@ if (IS_CI) {
 
 }
 
-fs.appendFileSync(logPath, `${new Date().toLocaleString()} adb-ci spawn: ${JSON.stringify(args)}\n`);
+fs.appendFileSync(logPath, `${currentDate.toLocaleString()} adb-ci spawn: ${JSON.stringify(args)}\n`);
 
 const
   spawn = require('child_process').spawn,
@@ -49,13 +51,21 @@ const
   });
 
 adb.on('exit', code => {
-  fs.appendFileSync(logPath, `${new Date().toLocaleString()} adb-ci exit: ${code}\n`);
+  fs.appendFileSync(logPath, `${currentDate.toLocaleString()} adb-ci exit: ${code}\n`);
   // Do not use process.exit, see http://stackoverflow.com/a/37592669/1691132
   process.exitCode = code;
 });
 
 adb.on('error', () => {
-  fs.appendFileSync(logPath,`${new Date().toLocaleString()} adb-ci error\n`);
+  fs.appendFileSync(logPath,`${currentDate.toLocaleString()} adb-ci error\n`);
   console.log(`adb-ci wrapper could not start adb at ${original_location}`);
   process.exitCode = 1;
+});
+
+adb.on('SIGHUP', function() {
+  fs.appendFileSync(logPath,`${currentDate.toLocaleString()} adb-ci SIGHUP\n`);
+});
+
+process.on('exit', code => {
+  fs.appendFileSync(logPath,`${currentDate.toLocaleString()} adb-ci process exit\n`);
 });
